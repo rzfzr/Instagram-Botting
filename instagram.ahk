@@ -36,7 +36,7 @@ Overlay(){
 	Gui, Font, s32  ; Set a large font size (32-point).
 	Gui, Add, Text, vMyText cLime, XXXXX YYYYY  ; XX & YY serve to auto-size the window.
 	WinSet, TransColor, %CustomColor% 150
-	SetTimer, UpdateOSD, 500
+	SetTimer, UpdateOSD, 1000
 	Gui, Show, x0 y100 NoActivate  ; NoActivate avoids deactivating the currently active window.
 
 }
@@ -151,7 +151,7 @@ ButtonGo:
 	}
 	if (Menu91){
 		Sleep, 200
-		Gosub, GoDown
+		Gosub, GoDown200
 	}
 
 	if (Menu10){
@@ -296,8 +296,8 @@ GotoFollowers:
 return
 
 GotoFollowing:
-	For row, subArray in accs{
-		For column, value in subArray{
+	For row, subArray in logins{
+		; For column, value in subArray{
 		Sleep, 155
 		Gosub, NextTab
 		Sleep, 700
@@ -307,20 +307,26 @@ GotoFollowing:
 		}
 		Send, {Enter}
 		Sleep, 50
-		}
+		; }
 	}
 return
 
 
-GoDown:
-	Loop, 200{
-		Sleep,50
-		Loop,3{
-			Send, {Tab}
-			Sleep, 6
+GoDown200:
+	For row, subArray in logins{
+		Loop, 200{
+			Sleep,50
+			Loop,3{
+				Send, {Tab}
+				Sleep, 6
+			}
+			Sleep,50
 		}
-		Sleep,50
+		Gosub, NextTab
+
 	}
+
+return	
 
 Follow:
 	Sleep,50
