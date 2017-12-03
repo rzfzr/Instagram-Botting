@@ -70,7 +70,8 @@ global
 	Gui, Tab, 3
 	Gui, Add, Checkbox, vMenu8, Abrir usuarios
 	Gui, Add, Checkbox, vMenu9, Navegar para Following
-
+	
+	Gui, Add, Checkbox, vMenu91, Descer 200
 	
 	Gui, Add, Checkbox, vMenu10, Unfollow
 
@@ -147,7 +148,12 @@ ButtonGo:
 	if (Menu9){
 		Sleep, 200
 		Gosub, GotoFollowing
-	}		
+	}
+	if (Menu91){
+		Sleep, 200
+		Gosub, GoDown
+	}
+
 	if (Menu10){
 		Sleep, 200
 		Gosub, Looping
@@ -157,22 +163,30 @@ return
 
 SwitchWindows:
 	Sleep,200
-	Send, {Alt DOWN}{Tab}{Alt UP}	
+	Send, {Alt DOWN}
+	Send, {Tab}
+	Send, {Alt UP}	
 	Sleep,200
 return
 CloseWindow:
 	Sleep,200
-	Send, {Alt Down}{F4}{Alt UP}
+	Send, {Alt Down}
+	Send, {F4}
+	Send, {Alt UP}
 	Sleep,200
 return
 
 NewWindow:
-	Send,{Ctrl DOWN}{n}{Ctrl UP}
+	Send, {Ctrl DOWN}
+	Send, {n}
+	Send, {Ctrl UP}
 return
 
 OpenBrowser:
 
-	Send, {LWin DOWN}{r}{LWin UP}
+	Send, {LWin DOWN}
+	Send, {r}
+	Send, {LWin UP}
 	Sleep, 200
 	Send, %browser% {Enter}
 	Sleep, 1666
@@ -184,13 +198,15 @@ Login:
 			Sleep, 100
 			NewTab(row)
 			Sleep, 200
-			Send, %instagram% {Enter}
+			Send, %instagram% 
+			Send, {Enter}
 			Sleep, 4500
-			Send, {Tab}{Tab}{Tab}
-			Sleep,25
-			Send, {Tab}{Tab}{Tab}
-			Sleep,25
-			Send, {Tab}{Tab}{Tab} {Enter}
+
+			Loop, 9{
+				Send, {Tab}
+				Sleep,6
+			}
+			Send, {Enter}
 			Sleep,2000
 
 		For column, value in subArray{
@@ -235,7 +251,8 @@ OpenUsersNewTabs(){
 				Sleep, 20
 				NewTab(row)
 				Sleep, 20
-				Send, %instagram%%value%{Enter}
+				Send, %instagram%%value%
+				Send, {Enter}
 				Sleep, 20
 			}
 		}
@@ -252,7 +269,8 @@ OpenAccsNewTabs(){
 			Sleep, 200
 			NewTab(row)
 			Sleep, 200
-			Send, %instagram%%value% {Enter}
+			Send, %instagram%%value% 
+			Send, {Enter}
 			Sleep, 300
 			;Msgbox, row: %row%`ncolumn: %column%`nvalue: %value%
 		}
@@ -267,9 +285,11 @@ GotoFollowers:
 		Sleep, 155
 		Gosub, NextTab
 		Sleep, 700
-		Send, {Tab}{Tab}
-		Sleep, 100
-		Send,{Tab}{Tab} {Enter}
+		Loop, 4{
+			Send, {Tab}
+			Sleep, 6
+		}
+		Send, {Enter}
 		Sleep, 50
 		}
 	}
@@ -281,39 +301,63 @@ GotoFollowing:
 		Sleep, 155
 		Gosub, NextTab
 		Sleep, 700
-		Send, {Tab}{Tab}{Tab}{Tab}
-		Sleep, 50
-		Send,{Tab}{Tab} {Enter}
+		Loop, 6{
+			Send, {Tab}
+			Sleep, 6
+		}
+		Send, {Enter}
 		Sleep, 50
 		}
 	}
 return
 
+
+GoDown:
+	Loop, 200{
+		Sleep,50
+		Loop,3{
+			Send, {Tab}
+			Sleep, 6
+		}
+		Sleep,50
+	}
+
 Follow:
 	Sleep,50
-	Send, {Tab}{Tab}{Tab} {Enter}
+	Loop,3{
+		Send, {Tab}
+	}
+	Send, {Enter}
 	Sleep,50
 return
 
 NextTab:
 	Sleep,50
-	Send, {Ctrl DOWN}{Tab}{Ctrl UP}
+	Send, {Ctrl DOWN}
+	Send, {Tab}
+	Send, {Ctrl UP}
 	Sleep, 50
 return
 
 CloseTab:
 	Sleep,50
-	Send, {Ctrl DOWN}{w}{Ctrl UP}
+	Send, {Ctrl DOWN}
+	Send, {w}
+	Send, {Ctrl UP}
 	Sleep, 50
 return
 
 NewTab(container){		
 	Sleep,250
 	if (contairer = 0){
-		Send, {Ctrl DOWN}{t}{Ctrl UP}
+		Send, {Ctrl DOWN}
+		Send, {t}
+		Send, {Ctrl UP}
 		Sleep, 150
 	}else{
-		Send, {Alt DOWN}{f}{Alt UP}
+		Send, {Alt DOWN}
+		Send, {f}
+		Send, {Alt UP}
 		Sleep, 200
 		Send, {b}
 		Sleep, 100
