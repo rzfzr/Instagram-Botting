@@ -4,6 +4,11 @@ global browser = "firefox"
 ; -private"
 global instagram = "instagram.com/"
 
+
+
+detectHiddenWindows, on
+
+
 global logins := Object()
 Loop Read, logins.csv
 {
@@ -27,6 +32,10 @@ StrSplit(InputVar, Delimiter="", OmitChars="") {
 
 MyGui()
 ; Overlay()
+; Gosub, WinGetID
+
+return
+
 
 Overlay(){
 	global
@@ -42,15 +51,14 @@ Overlay(){
 }
 
 UpdateOSD:
-MouseGetPos, MouseX, MouseY
-GuiControl,, MyText, X%MouseX%, Y%MouseY%
-
+	MouseGetPos, MouseX, MouseY
+	GuiControl,, MyText, X%MouseX%, Y%MouseY%
 Return
 
 
 
 MyGui(){
-global
+	global
 
 	gui, font, s10, Verdana
 	Gui, Add, Tab2,, Main | Follow | Unfollow | Contas
@@ -95,23 +103,51 @@ global
 
 }
  
+WinGetID:
+  Suspend On
+  but = MButton
+  While (!GetKeyState(but,"P"))
+  { ToolTip, Left Click on your game window and press %but% to grab the window id
+  }
+  KeyWait, %but%
+  WinGet, vWinID,ID,A
+  ToolTip
+  vWinID = ahk_id %vWinID%
+  ;position & size
+  ;WinMove, %vWinID%,,0,0,%A_ScreenWidth%,%A_ScreenHeight%
+  Suspend, Off
+  Return
 
 
-`::
-	For row, subArray in logins{
-		For column, value in subArray{
-			if (column == 1){
-				Msgbox, %value%
-			}
-		}
-	}
-Return
+; `::
+	; ControlSend, , abc, cmd.exe
+	; SetTitleMatchMode, 2
+
+
+	; Msgbox, %vWinID%
+
+	; 	ControlSend,, {Ctrl DOWN},%vWinID%
+	; 	ControlSend,, {Tab},%vWinID%
+	; 	ControlSend,, {Ctrl UP},%vWinID%
+
+
+
+	; For row, subArray in logins{
+	; 	For column, value in subArray{
+	; 		if (column == 1){
+	; 			Msgbox, %value%
+	; 		}
+	; 	}
+	; }
+; Return
 
 
 ButtonGo:
 	Gui, Submit, Hide
 
 	if (Menu1){
+		; run firefox,, , npPid
+		; winWait % "ahk_pid " npPid
 		Gosub, OpenBrowser
 		Sleep, 200
 	}
