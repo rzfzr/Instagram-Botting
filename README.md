@@ -2,10 +2,10 @@
 
 Badly written and performant but definitely not being recognized as a bot any time soon. Basically a keyboard macro using AHK and Containers inside Firefox.
 
-AHK: https://autohotkey.com
-Firefox: https://www.mozilla.org/firefox/
-Containers: https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/
-Image blocker (recommended): https://addons.mozilla.org/en-US/firefox/addon/easy-image-blocker/?src=api
+AHK: https://autohotkey.com  
+Firefox: https://www.mozilla.org/firefox/  
+Containers: https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/  
+Image blocker (recommended): https://addons.mozilla.org/en-US/firefox/addon/easy-image-blocker/?src=api  
 
 1. Install everything
 2. Populate both CSV
